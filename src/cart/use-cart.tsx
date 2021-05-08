@@ -18,7 +18,18 @@ export const fetcher: HookFetcher<Cart | null, CartInput> = (
   return cartId ? fetch({ ...defaultOpts, ...options }) : null
 }
 
+/*
+Here’s the full list of what constitutes an API:
+
+Method signature: name, parameters, returning value. Ex. swrOptions.
+Preconditions: a list of requirements the clients should meet before they can use the method. Ex. cart id in cookies.
+Postconditions: a list of guarantees the module makes. Ex. isEmpty
+Invariants: a list of conditions that have to be held true at all times. Ex. cart id is always sent to the server.
+*/
+
 export function extendHook(
+  // Существует множество реализаций зависимости, и класс на этом уровне не может решать, какой из них выбрать.
+  // extendHook has a dependency customFetcher. Default implementation is a local default, defined in the same module.
   customFetcher: typeof fetcher,
   swrOptions?: SwrOptions<Cart | null, CartInput>
 ) {
